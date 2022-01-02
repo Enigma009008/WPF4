@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Academy_fitnessModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="Academy_fitnessEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Course" EntityType="Academy_fitnessModel.Course" />
+    <EntitySet Name="CourseRegistration" EntityType="Academy_fitnessModel.CourseRegistration" />
+    <EntitySet Name="Trainer" EntityType="Academy_fitnessModel.Trainer" />
+    <AssociationSet Name="FK_CourseRegistration_Course" Association="Academy_fitnessModel.FK_CourseRegistration_Course">
+      <End Role="Course" EntitySet="Course" />
+      <End Role="CourseRegistration" EntitySet="CourseRegistration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CourseRegistration_Trainer" Association="Academy_fitnessModel.FK_CourseRegistration_Trainer">
+      <End Role="Trainer" EntitySet="Trainer" />
+      <End Role="CourseRegistration" EntitySet="CourseRegistration" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Course">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CourseRegistration" Relationship="Academy_fitnessModel.FK_CourseRegistration_Course" FromRole="Course" ToRole="CourseRegistration" />
+  </EntityType>
+  <EntityType Name="CourseRegistration">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TrainerID" Type="Int32" Nullable="false" />
+    <Property Name="CourseID" Type="Int32" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="IsDone" Type="Boolean" Nullable="false" />
+    <Property Name="TotalPoint" Type="Int32" Nullable="false" />
+    <Property Name="Comment" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Course" Relationship="Academy_fitnessModel.FK_CourseRegistration_Course" FromRole="CourseRegistration" ToRole="Course" />
+    <NavigationProperty Name="Trainer" Relationship="Academy_fitnessModel.FK_CourseRegistration_Trainer" FromRole="CourseRegistration" ToRole="Trainer" />
+  </EntityType>
+  <EntityType Name="Trainer">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CourseRegistration" Relationship="Academy_fitnessModel.FK_CourseRegistration_Trainer" FromRole="Trainer" ToRole="CourseRegistration" />
+  </EntityType>
+  <Association Name="FK_CourseRegistration_Course">
+    <End Type="Academy_fitnessModel.Course" Role="Course" Multiplicity="1" />
+    <End Type="Academy_fitnessModel.CourseRegistration" Role="CourseRegistration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CourseRegistration">
+        <PropertyRef Name="CourseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CourseRegistration_Trainer">
+    <End Type="Academy_fitnessModel.Trainer" Role="Trainer" Multiplicity="1" />
+    <End Type="Academy_fitnessModel.CourseRegistration" Role="CourseRegistration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trainer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CourseRegistration">
+        <PropertyRef Name="TrainerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

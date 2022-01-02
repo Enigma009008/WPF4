@@ -1,0 +1,43 @@
+﻿<Window x:Class="Academy_Fitness.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Academy_Fitness"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen" WindowState="Maximized"
+        Title="Список регистрации на курс" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition ></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="BtnAdd" Click="BtnAdd_Click" Content="Добавить" />
+            <Button x:Name="BtnRemove" Click="BtnRemove_Click" Content="Удалить" />
+        </StackPanel>
+
+
+        <DataGrid Grid.Row="1" ColumnWidth="*" IsReadOnly="True" AutoGenerateColumns="False" x:Name="DataGridRegistration" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Курс" Binding="{Binding Course.Title}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Тренер" Binding="{Binding Trainer.Name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Дата начала" Binding="{Binding CreatedDate,StringFormat={} {0:dd MMMM yyyy}}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Балл" Binding="{Binding TotalPoint}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Завершен" Binding="{Binding IsDoneString}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}"></DataGridTextColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="BtnEdit" Click="BtnEdit_Click" Content="Редактировать" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+           
+            
+
+        </DataGrid>
+    </Grid>
+</Window>
